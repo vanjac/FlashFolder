@@ -289,9 +289,12 @@ void CmnFileDlgHook::InitShellWnd()
 		{
 			m_pShellBrowser->AddRef();	
 	
-			// Restore last view mode.		
-			DebugOut( L"[fflib] Restore viewMode = %d, imageSize = %d\n", m_shellViewMode, m_shellViewImageSize );
-			ShellViewSetViewMode( m_pShellBrowser, m_shellViewMode, m_shellViewImageSize );
+			if( g_profile.GetInt( L"main", L"ListViewMode" ) != FVM_AUTO )
+			{
+				// Restore last view mode.
+				DebugOut( L"[fflib] Restore viewMode = %d, imageSize = %d\n", m_shellViewMode, m_shellViewImageSize );
+				ShellViewSetViewMode( m_pShellBrowser, m_shellViewMode, m_shellViewImageSize );
+			}
 			
 			// Cache path of current folder so it will be available even after the shellview is destroyed.
 			ShellViewGetCurrentFolder( m_pShellBrowser, &m_currentFolder );
